@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: "hans362/CredsRadar"
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: "CredsRadar"
 
       - name: Install dependencies
