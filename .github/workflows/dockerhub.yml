@@ -23,8 +23,10 @@ jobs:
           python-version: "3.13"
 
       - name: Clone main repository
-        run: |
-          git clone https://github.com/hans362/CredsRadar.git
+        uses: actions/checkout@v4
+        with:
+          repository: "hans362/CredsRadar"
+          path: "CredsRadar"
 
       - name: Install dependencies
         working-directory: CredsRadar
