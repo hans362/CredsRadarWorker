@@ -46,6 +46,7 @@ jobs:
           RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
           API_URL: ${{ secrets.API_URL }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
+          OBJECTSTORAGE_GRAYHATWARFARE_API_KEY: ${{ secrets.OBJECTSTORAGE_GRAYHATWARFARE_API_KEY }}
           WORKER_ID: ${{ matrix.worker-id }}
         run: |
           uv run python worker.py ${{ github.event.inputs.queue }}
