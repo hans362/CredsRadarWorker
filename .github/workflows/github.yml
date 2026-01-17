@@ -1,0 +1,49 @@
+name: Worker
+
+on:
+  schedule:
+    - cron: "0 */1 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-worker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        worker-id: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Clone main repository
+        uses: actions/checkout@v4
+        with:
+          repository: "hans362/CredsRadar"
+          token: ${{ secrets.GH_PAT }}
+          path: "CredsRadar"
+
+      - name: Install dependencies
+        working-directory: CredsRadar
+        run: |
+          python -m pip install uv
+          uv sync
+
+      - name: Start worker
+        working-directory: CredsRadar
+        env:
+          RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
+          RABBITMQ_USER: ${{ secrets.RABBITMQ_USER }}
+          RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+          API_URL: ${{ secrets.API_URL }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+          OBJECTSTORAGE_GRAYHATWARFARE_API_KEY: ${{ secrets.OBJECTSTORAGE_GRAYHATWARFARE_API_KEY }}
+          WORKER_ID: ${{ matrix.worker-id }}
+        run: |
+          timeout 3600s uv run python worker.py "github*"
