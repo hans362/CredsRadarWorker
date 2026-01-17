@@ -1,8 +1,6 @@
 name: GitHub Queue Worker
 
 on:
-  schedule:
-    - cron: "0 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        worker-id: [0, 1, 2, 3, 4]
+        worker-id: [0, 1, 2]
     steps:
       - name: Checkout master
         uses: actions/checkout@v4
