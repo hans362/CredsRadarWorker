@@ -44,4 +44,4 @@ jobs:
           OBJECTSTORAGE_GRAYHATWARFARE_API_KEY: ${{ secrets.OBJECTSTORAGE_GRAYHATWARFARE_API_KEY }}
           WORKER_ID: ${{ matrix.worker-id }}
         run: |
-          (timeout 3600s uv run python worker.py "github*"; exit 0)
+          timeout 3600s uv run python worker.py "github*" || true
