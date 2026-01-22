@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         working-directory: CredsRadar
         run: |
+          aria2c -o apktool.jar -d /usr/local/bin https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.12.1.jar
+          aria2c -o apktool -d /usr/local/bin https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
+          chmod +x /usr/local/bin/apktool.jar /usr/local/bin/apktool
           python -m pip install uv
           uv sync
 
