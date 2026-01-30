@@ -44,4 +44,4 @@ jobs:
           OBJECTSTORAGE_GRAYHATWARFARE_API_KEY: ${{ secrets.OBJECTSTORAGE_GRAYHATWARFARE_API_KEY }}
           WORKER_ID: ${{ matrix.worker-id }}
         run: |
-          timeout 3600s uv run python worker.py "apkpure*" || true
+          timeout 3600s bash -c "while true; do uv run python worker.py \"apkpure*\"; sleep 1; done" || true
